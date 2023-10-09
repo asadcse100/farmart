@@ -7,7 +7,6 @@
             <div class="updater-box mb-5" dir="ltr">
                 <div class="note note-warning">
                     <p>- Please back up your database and script files before upgrading.</p>
-                    <p>- You need to activate your license before doing upgrade.</p>
                     <p>- If you don't need this 1-click update, you can disable it in <strong>.env</strong> by adding <strong>CMS_ENABLE_SYSTEM_UPDATER=false</strong></p>
                     <p>- It will override all files in <strong>platform/core</strong>, <strong>platform/packages</strong>, all plugins developed by us in <strong>platform/plugins</strong> and theme developed by us in <strong>platform/themes</strong>.</p>
                 </div>

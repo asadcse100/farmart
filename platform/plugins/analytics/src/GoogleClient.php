@@ -7,13 +7,6 @@ use LogicException;
 
 class GoogleClient extends Client
 {
-    /**
-     * Set the auth config from new or deprecated JSON config.
-     * This structure should match the file downloaded from
-     * the "Download JSON" button on in the Google Developer
-     * Console.
-     * @param string|array $config the configuration json
-     */
     public function setAuthConfig($config): void
     {
         if (is_string($config)) {

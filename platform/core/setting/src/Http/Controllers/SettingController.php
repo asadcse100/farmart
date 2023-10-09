@@ -2,8 +2,8 @@
 
 namespace Botble\Setting\Http\Controllers;
 
-use Botble\Base\Exceptions\LicenseInvalidException;
-use Botble\Base\Exceptions\LicenseIsAlreadyActivatedException;
+// use Botble\Base\Exceptions\LicenseInvalidException;
+// use Botble\Base\Exceptions\LicenseIsAlreadyActivatedException;
 use Botble\Base\Facades\Assets;
 use Botble\Base\Facades\BaseHelper;
 use Botble\Base\Facades\EmailHandler;
@@ -19,7 +19,7 @@ use Botble\Media\Models\MediaFolder;
 use Botble\Setting\Facades\Setting;
 use Botble\Setting\Http\Requests\EmailSettingRequest;
 use Botble\Setting\Http\Requests\EmailTemplateRequest;
-use Botble\Setting\Http\Requests\LicenseSettingRequest;
+// use Botble\Setting\Http\Requests\LicenseSettingRequest;
 use Botble\Setting\Http\Requests\MediaSettingRequest;
 use Botble\Setting\Http\Requests\ResetEmailTemplateRequest;
 use Botble\Setting\Http\Requests\SendTestEmailRequest;
@@ -36,23 +36,23 @@ use Throwable;
 
 class SettingController extends BaseController
 {
-    public function getOptions()
-    {
-        PageTitle::setTitle(trans('core/setting::setting.title'));
+    // public function getOptions()
+    // {
+    //     PageTitle::setTitle(trans('core/setting::setting.title'));
 
-        Assets::addScripts(['jquery-validation', 'form-validation'])
-            ->addScriptsDirectly([
-                'vendor/core/core/setting/js/setting.js',
-                'vendor/core/core/setting/js/verify-license.js',
-            ])
-            ->addStylesDirectly('vendor/core/core/setting/css/setting.css');
+    //     Assets::addScripts(['jquery-validation', 'form-validation'])
+    //         ->addScriptsDirectly([
+    //             'vendor/core/core/setting/js/setting.js',
+    //             'vendor/core/core/setting/js/verify-license.js',
+    //         ])
+    //         ->addStylesDirectly('vendor/core/core/setting/css/setting.css');
 
-        Assets::usingVueJS();
+    //     Assets::usingVueJS();
 
-        $jsValidation = JsValidator::formRequest(SettingRequest::class);
+    //     $jsValidation = JsValidator::formRequest(SettingRequest::class);
 
-        return view('core/setting::index', compact('jsValidation'));
-    }
+    //     return view('core/setting::index', compact('jsValidation'));
+    // }
 
     public function postEdit(SettingRequest $request, BaseHttpResponse $response)
     {
@@ -259,105 +259,105 @@ class SettingController extends BaseController
             ->setMessage(trans('core/base::notices.update_success_message'));
     }
 
-    public function getVerifyLicense(Request $request, Core $core, BaseHttpResponse $response)
-    {
-        if ($request->expectsJson() && ! $core->checkConnection()) {
-            return response()->json([
-                'message' => __('Your server is not connected to the internet.'),
-            ], 400);
-        }
+    // public function getVerifyLicense(Request $request, Core $core, BaseHttpResponse $response)
+    // {
+    //     if ($request->expectsJson() && ! $core->checkConnection()) {
+    //         return response()->json([
+    //             'message' => __('Your server is not connected to the internet.'),
+    //         ], 400);
+    //     }
 
-        $invalidMessage = 'Your license is invalid. Please activate your license!';
+    //     $invalidMessage = 'Your license is invalid. Please activate your license!';
 
-        $licenseFilePath = $core->getLicenseFilePath();
+    //     $licenseFilePath = $core->getLicenseFilePath();
 
-        if (! File::exists($licenseFilePath)) {
-            return $response->setError()->setMessage($invalidMessage);
-        }
+    //     if (! File::exists($licenseFilePath)) {
+    //         return $response->setError()->setMessage($invalidMessage);
+    //     }
 
-        try {
-            if (! $core->verifyLicense(true)) {
-                return $response->setError()->setMessage($invalidMessage);
-            }
+    //     try {
+    //         if (! $core->verifyLicense(true)) {
+    //             return $response->setError()->setMessage($invalidMessage);
+    //         }
 
-            $activatedAt = Carbon::createFromTimestamp(filectime($core->getLicenseFilePath()));
-            $message = 'Your license is activated.';
-        } catch (Throwable $exception) {
-            $activatedAt = Carbon::now();
-            $message = $exception->getMessage();
-        }
+    //         $activatedAt = Carbon::createFromTimestamp(filectime($core->getLicenseFilePath()));
+    //         $message = 'Your license is activated.';
+    //     } catch (Throwable $exception) {
+    //         $activatedAt = Carbon::now();
+    //         $message = $exception->getMessage();
+    //     }
 
-        $data = [
-            'activated_at' => $activatedAt->format('M d Y'),
-            'licensed_to' => setting('licensed_to'),
-        ];
+    //     $data = [
+    //         'activated_at' => $activatedAt->format('M d Y'),
+    //         'licensed_to' => setting('licensed_to'),
+    //     ];
 
-        return $response->setMessage($message)->setData($data);
-    }
+    //     return $response->setMessage($message)->setData($data);
+    // }
 
-    public function activateLicense(LicenseSettingRequest $request, BaseHttpResponse $response, Core $core)
-    {
-        $buyer = $request->input('buyer');
+    // public function activateLicense(LicenseSettingRequest $request, BaseHttpResponse $response, Core $core)
+    // {
+    //     $buyer = $request->input('buyer');
 
-        if (filter_var($buyer, FILTER_VALIDATE_URL)) {
-            $buyer = explode('/', $buyer);
-            $username = end($buyer);
+    //     if (filter_var($buyer, FILTER_VALIDATE_URL)) {
+    //         $buyer = explode('/', $buyer);
+    //         $username = end($buyer);
 
-            return $response
-                ->setError()
-                ->setMessage(sprintf('Envato username must not a URL. Please try with username "%s".', $username));
-        }
+    //         return $response
+    //             ->setError()
+    //             ->setMessage(sprintf('Envato username must not a URL. Please try with username "%s".', $username));
+    //     }
 
-        $purchasedCode = $request->input('purchase_code');
+    //     $purchasedCode = $request->input('purchase_code');
 
-        try {
-            $core->activateLicense($purchasedCode, $buyer);
+    //     try {
+    //         $core->activateLicense($purchasedCode, $buyer);
 
-            $data = $this->saveActivatedLicense($core, $buyer);
+    //         $data = $this->saveActivatedLicense($core, $buyer);
 
-            return $response
-                ->setMessage('Your license has been activated successfully.')
-                ->setData($data);
-        } catch (LicenseInvalidException|LicenseIsAlreadyActivatedException $exception) {
-            return $response
-                ->setError()
-                ->setMessage($exception->getMessage());
-        } catch (Throwable $exception) {
-            report($exception);
+    //         return $response
+    //             ->setMessage('Your license has been activated successfully.')
+    //             ->setData($data);
+    //     } catch (LicenseInvalidException|LicenseIsAlreadyActivatedException $exception) {
+    //         return $response
+    //             ->setError()
+    //             ->setMessage($exception->getMessage());
+    //     } catch (Throwable $exception) {
+    //         report($exception);
 
-            return $response
-                ->setError()
-                ->setMessage('Something went wrong. Please try again later.');
-        }
-    }
+    //         return $response
+    //             ->setError()
+    //             ->setMessage('Something went wrong. Please try again later.');
+    //     }
+    // }
 
-    public function deactivateLicense(BaseHttpResponse $response, Core $core)
-    {
-        try {
-            $core->deactivateLicense();
+    // public function deactivateLicense(BaseHttpResponse $response, Core $core)
+    // {
+    //     try {
+    //         $core->deactivateLicense();
 
-            Setting::delete(['licensed_to']);
+    //         Setting::delete(['licensed_to']);
 
-            return $response->setMessage('Deactivated license successfully!');
-        } catch (Throwable $exception) {
-            return $response->setError()->setMessage($exception->getMessage());
-        }
-    }
+    //         return $response->setMessage('Deactivated license successfully!');
+    //     } catch (Throwable $exception) {
+    //         return $response->setError()->setMessage($exception->getMessage());
+    //     }
+    // }
 
-    public function resetLicense(LicenseSettingRequest $request, BaseHttpResponse $response, Core $core)
-    {
-        try {
-            if (! $core->revokeLicense($request->input('purchase_code'), $request->input('buyer'))) {
-                return $response->setError()->setMessage('Could not reset your license.');
-            }
+    // public function resetLicense(LicenseSettingRequest $request, BaseHttpResponse $response, Core $core)
+    // {
+    //     try {
+    //         if (! $core->revokeLicense($request->input('purchase_code'), $request->input('buyer'))) {
+    //             return $response->setError()->setMessage('Could not reset your license.');
+    //         }
 
-            Setting::delete(['licensed_to']);
+    //         Setting::delete(['licensed_to']);
 
-            return $response->setMessage('Your license has been reset successfully.');
-        } catch (Throwable $exception) {
-            return $response->setError()->setMessage($exception->getMessage());
-        }
-    }
+    //         return $response->setMessage('Your license has been reset successfully.');
+    //     } catch (Throwable $exception) {
+    //         return $response->setError()->setMessage($exception->getMessage());
+    //     }
+    // }
 
     public function generateThumbnails(BaseHttpResponse $response)
     {
@@ -474,17 +474,17 @@ class SettingController extends BaseController
         return view('core/setting::cronjob', compact('command', 'lastRunAt'));
     }
 
-    protected function saveActivatedLicense(Core $core, string $buyer): array
-    {
-        setting()
-            ->set(['licensed_to' => $buyer])
-            ->save();
+    // protected function saveActivatedLicense(Core $core, string $buyer): array
+    // {
+    //     setting()
+    //         ->set(['licensed_to' => $buyer])
+    //         ->save();
 
-        $activatedAt = Carbon::createFromTimestamp(filectime($core->getLicenseFilePath()));
+    //     $activatedAt = Carbon::createFromTimestamp(filectime($core->getLicenseFilePath()));
 
-        return [
-            'activated_at' => $activatedAt->format('M d Y'),
-            'licensed_to' => $buyer,
-        ];
-    }
+    //     return [
+    //         'activated_at' => $activatedAt->format('M d Y'),
+    //         'licensed_to' => $buyer,
+    //     ];
+    // }
 }

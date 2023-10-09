@@ -6,22 +6,6 @@ use Botble\Base\Facades\Html;
 use Botble\Base\Supports\Enum;
 use Illuminate\Support\HtmlString;
 
-/**
- * @method static ShippingStatusEnum NOT_APPROVED()
- * @method static ShippingStatusEnum APPROVED()
- * @method static ShippingStatusEnum ARRANGE_SHIPMENT()
- * @method static ShippingStatusEnum READY_TO_BE_SHIPPED_OUT()
- * @method static ShippingStatusEnum PICKING()
- * @method static ShippingStatusEnum PENDING()
- * @method static ShippingStatusEnum DELAY_PICKING()
- * @method static ShippingStatusEnum PICKED()
- * @method static ShippingStatusEnum NOT_PICKED()
- * @method static ShippingStatusEnum DELIVERING()
- * @method static ShippingStatusEnum DELIVERED()
- * @method static ShippingStatusEnum NOT_DELIVERED()
- * @method static ShippingStatusEnum AUDITED()
- * @method static ShippingStatusEnum CANCELED()
- */
 class ShippingStatusEnum extends Enum
 {
     public const NOT_APPROVED = 'not_approved';

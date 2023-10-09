@@ -43,7 +43,6 @@ class StoreProductService
                 'wide',
                 'height',
                 'weight',
-                'generate_license_code',
             ]);
         }
 

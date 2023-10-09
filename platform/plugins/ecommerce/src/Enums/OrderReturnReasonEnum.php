@@ -6,14 +6,6 @@ use Botble\Base\Facades\Html;
 use Botble\Base\Supports\Enum;
 use Illuminate\Support\HtmlString;
 
-/**
- * @method static OrderReturnReasonEnum NO_LONGER_WANT()
- * @method static OrderReturnReasonEnum DAMAGED()
- * @method static OrderReturnReasonEnum DEFECTIVE()
- * @method static OrderReturnReasonEnum INCORRECT_ITEM()
- * @method static OrderReturnReasonEnum ARRIVED_LATE()
- * @method static OrderReturnReasonEnum NOT_AS_DESCRIBED()
- */
 class OrderReturnReasonEnum extends Enum
 {
     public const NO_LONGER_WANT = 'no_longer_want';

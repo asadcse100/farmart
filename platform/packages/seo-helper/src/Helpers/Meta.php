@@ -179,7 +179,6 @@ class Meta implements MetaContract
             'icon',
             'index',
             'last',
-            'license',
             'next',
             'nofollow',
             'noreferrer',

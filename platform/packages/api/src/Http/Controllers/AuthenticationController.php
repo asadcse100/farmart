@@ -16,41 +16,6 @@ use Illuminate\Support\Str;
 
 class AuthenticationController extends Controller
 {
-    /**
-     * Register
-     *
-     * @bodyParam first_name string required The name of the user.
-     * @bodyParam last_name string required The name of the user.
-     * @bodyParam email string required The email of the user.
-     * @bodyParam phone string required The phone of the user.
-     * @bodyParam password string  required The password of user to create.
-     * @bodyParam password_confirmation string  required The password confirmation.
-     *
-     * @response {
-     * "error": false,
-     * "data": null,
-     * "message": "Registered successfully! We emailed you to verify your account!"
-     * }
-     * @response 422 {
-     * "message": "The given data was invalid.",
-     * "errors": {
-     *     "first_name": [
-     *         "The first name field is required."
-     *     ],
-     *     "last_name": [
-     *         "The last name field is required."
-     *     ],
-     *     "email": [
-     *         "The email field is required."
-     *     ],
-     *     "password": [
-     *         "The password field is required."
-     *     ]
-     *   }
-     * }
-     *
-     * @group Authentication
-     */
     public function register(RegisterRequest $request, BaseHttpResponse $response)
     {
         $request->merge(['password' => Hash::make($request->input('password'))]);

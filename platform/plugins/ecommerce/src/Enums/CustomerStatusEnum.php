@@ -6,10 +6,6 @@ use Botble\Base\Facades\Html;
 use Botble\Base\Supports\Enum;
 use Illuminate\Support\HtmlString;
 
-/**
- * @method static CustomerStatusEnum ACTIVATED()
- * @method static CustomerStatusEnum LOCKED()
- */
 class CustomerStatusEnum extends Enum
 {
     public const ACTIVATED = 'activated';

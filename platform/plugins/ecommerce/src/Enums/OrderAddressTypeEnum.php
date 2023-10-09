@@ -6,10 +6,6 @@ use Botble\Base\Facades\Html;
 use Botble\Base\Supports\Enum;
 use Illuminate\Support\HtmlString;
 
-/**
- * @method static OrderAddressTypeEnum SHIPPING()
- * @method static OrderAddressTypeEnum BILLING()
- */
 class OrderAddressTypeEnum extends Enum
 {
     public const SHIPPING = 'shipping_address';

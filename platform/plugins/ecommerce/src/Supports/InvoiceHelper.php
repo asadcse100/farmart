@@ -95,9 +95,9 @@ class InvoiceHelper
                     $orderProduct->product_options_implode ? [
                         'product_options' => $orderProduct->product_options_implode,
                     ] : [],
-                    $orderProduct->license_code ? [
-                        'license_code' => $orderProduct->license_code,
-                    ] : [],
+                    // $orderProduct->license_code ? [
+                    //     'license_code' => $orderProduct->license_code,
+                    // ] : [],
                 ),
             ]);
         }

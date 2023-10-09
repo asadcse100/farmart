@@ -4,15 +4,6 @@ namespace Botble\Ecommerce\Enums;
 
 use Botble\Base\Supports\Enum;
 
-/**
- * @method static DiscountTargetEnum ALL_ORDERS()
- * @method static DiscountTargetEnum CUSTOMER()
- * @method static DiscountTargetEnum MINIMUM_ORDER_AMOUNT()
- * @method static DiscountTargetEnum ONCE_PER_CUSTOMER()
- * @method static DiscountTargetEnum PRODUCT_VARIANT()
- * @method static DiscountTargetEnum PRODUCT_COLLECTIONS()
- * @method static DiscountTargetEnum SPECIFIC_PRODUCT()
- */
 class DiscountTargetEnum extends Enum
 {
     public const ALL_ORDERS = 'all-orders';

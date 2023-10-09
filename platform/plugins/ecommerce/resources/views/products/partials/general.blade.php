@@ -199,14 +199,14 @@
         ($originalProduct && $originalProduct->isTypeDigital()) ||
         ($product && $product->isTypeDigital())))
 
-    <div class="form-check mb-3">
+    {{-- <div class="form-check mb-3">
         <input type="hidden" name="generate_license_code" value="0">
         <input class="form-check-input" type="checkbox" value="1" name="generate_license_code" id="generate_license_code"
             @checked(old('generate_license_code', $product ? $product->generate_license_code : ($originalProduct->generate_license_code ?? 0)))>
         <label class="form-check-label" for="generate_license_code">
             {{ trans('plugins/ecommerce::products.digital_attachments.generate_license_code_after_purchasing_product') }}
         </label>
-    </div>
+    </div> --}}
 
     <div class="mb-3 product-type-digital-management">
         <label for="product_file" class="mb-2">{{ trans('plugins/ecommerce::products.digital_attachments.title') }}</label>

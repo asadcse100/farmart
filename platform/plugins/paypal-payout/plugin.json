@@ -4,7 +4,6 @@
     "namespace": "Botble\\PayPalPayout\\",
     "provider": "Botble\\PayPalPayout\\Providers\\PayPalPayoutServiceProvider",
     "author": "Botble Technologies",
-    "url": "https://botble.com",
     "version": "1.0.0",
     "description": "PayPal Payout payment gateway integration",
     "require": [

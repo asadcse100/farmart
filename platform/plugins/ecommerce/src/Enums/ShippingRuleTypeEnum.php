@@ -10,12 +10,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\HtmlString;
 
-/**
- * @method static ShippingRuleTypeEnum BASED_ON_PRICE()
- * @method static ShippingRuleTypeEnum BASED_ON_WEIGHT()
- * @method static ShippingRuleTypeEnum BASED_ON_ZIPCODE()
- * @method static ShippingRuleTypeEnum BASED_ON_LOCATION()
- */
 class ShippingRuleTypeEnum extends Enum
 {
     public const BASED_ON_PRICE = 'based_on_price';

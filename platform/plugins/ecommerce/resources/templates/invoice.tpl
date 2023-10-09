@@ -252,9 +252,6 @@
                     {% if item.options.product_options %}
                         <div>{{ 'plugins/ecommerce::invoice.detail.product_options'|trans }}: {{ item.options.product_options }}</div>
                     {% endif %}
-                    {% if item.options.license_code %}
-                        <div>{{ 'plugins/ecommerce::invoice.detail.license_code'|trans }}: {{ item.options.license_code }}</div>
-                    {% endif %}
                 {% endif %}
             </td>
             <td>{{ item.qty }}</td>

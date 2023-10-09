@@ -30,7 +30,6 @@ class ProductVersionRequest extends Request
             'cost_per_item' => 'nullable|numeric|min:0|max:' . $this->input('price'),
             'attribute_sets' => 'nullable|array',
             'attribute_sets.*' => 'required',
-            'general_license_code' => 'nullable|in:0,1',
         ];
     }
 

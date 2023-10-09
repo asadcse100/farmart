@@ -1,17 +1,5 @@
 <?php
 
-/**
- * PHP version of mysqldump cli that comes with MySQL.
- *
- * Tags: mysql mysqldump pdo php7 php5 database php sql hhvm mariadb mysql-backup.
- *
- * @category Library
- *
- * @author   Diego Torres <ifsnop@github.com>
- * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
- *
- * @see     https://github.com/ifsnop/mysqldump-php
- */
 
 namespace Botble\Backup\Supports\MySql;
 
@@ -19,16 +7,6 @@ use Exception;
 use PDO;
 use PDOException;
 
-/**
- * Class Mysqldump.
- *
- * @category Library
- *
- * @author   Diego Torres <ifsnop@github.com>
- * @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
- *
- * @see     https://github.com/ifsnop/mysqldump-php
- */
 class MySqlDump
 {
     // Same as mysqldump.

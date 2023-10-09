@@ -2,16 +2,16 @@
 
 namespace Botble\Base\Supports;
 
-use Botble\Base\Events\LicenseActivated;
-use Botble\Base\Events\LicenseActivating;
-use Botble\Base\Events\LicenseDeactivated;
-use Botble\Base\Events\LicenseDeactivating;
-use Botble\Base\Events\LicenseInvalid;
-use Botble\Base\Events\LicenseRevoked;
-use Botble\Base\Events\LicenseRevoking;
-use Botble\Base\Events\LicenseUnverified;
-use Botble\Base\Events\LicenseVerified;
-use Botble\Base\Events\LicenseVerifying;
+// use Botble\Base\Events\LicenseActivated;
+// use Botble\Base\Events\LicenseActivating;
+// use Botble\Base\Events\LicenseDeactivated;
+// use Botble\Base\Events\LicenseDeactivating;
+// use Botble\Base\Events\LicenseInvalid;
+// use Botble\Base\Events\LicenseRevoked;
+// use Botble\Base\Events\LicenseRevoking;
+// use Botble\Base\Events\LicenseUnverified;
+// use Botble\Base\Events\LicenseVerified;
+// use Botble\Base\Events\LicenseVerifying;
 use Botble\Base\Events\SystemUpdateAvailable;
 use Botble\Base\Events\SystemUpdateCachesCleared;
 use Botble\Base\Events\SystemUpdateCachesClearing;
@@ -26,8 +26,8 @@ use Botble\Base\Events\SystemUpdateExtractingFiles;
 use Botble\Base\Events\SystemUpdatePublished;
 use Botble\Base\Events\SystemUpdatePublishing;
 use Botble\Base\Events\SystemUpdateUnavailable;
-use Botble\Base\Exceptions\LicenseInvalidException;
-use Botble\Base\Exceptions\LicenseIsAlreadyActivatedException;
+// use Botble\Base\Exceptions\LicenseInvalidException;
+// use Botble\Base\Exceptions\LicenseIsAlreadyActivatedException;
 use Botble\Base\Exceptions\MissingCURLExtensionException;
 use Botble\Base\Facades\BaseHelper;
 use Botble\Base\Services\ClearCacheService;
@@ -61,7 +61,7 @@ final class Core
 
     private string $coreDataFilePath;
 
-    private string $licenseFilePath;
+    // private string $licenseFilePath;
 
     private string $productId;
 
@@ -71,11 +71,11 @@ final class Core
 
     private string $minimumPhpVersion = '8.0.2';
 
-    private string $licenseUrl = 'https://license.botble.com';
+    // private string $licenseUrl = 'https://license.botble.com';
 
-    private string $licenseKey = 'CAF4B17F6D3F656125F9';
+    // private string $licenseKey = 'CAF4B17F6D3F656125F9';
 
-    private string $cacheLicenseKeyName = '45d0da541764682476f822028d945a46270ba404';
+    // private string $cacheLicenseKeyName = '45d0da541764682476f822028d945a46270ba404';
 
     private int $verificationPeriod = 1;
 
@@ -85,7 +85,7 @@ final class Core
         private Session $session
     ) {
         $this->basePath = base_path();
-        $this->licenseFilePath = storage_path('.license');
+        // $this->licenseFilePath = storage_path('.license');
         $this->coreDataFilePath = core_path('core.json');
 
         $this->parseDataFromCoreDataFile();
@@ -99,7 +99,7 @@ final class Core
     public function checkConnection(): bool
     {
         return $this->cache->remember(
-            "license:{$this->cacheLicenseKeyName}:check_connection",
+            // "license:{$this->cacheLicenseKeyName}:check_connection",
             Carbon::now()->addDays($this->verificationPeriod),
             fn () => rescue(fn () => $this->createRequest('/api/check_connection_ext')->ok()) ?: false
         );
@@ -115,117 +115,113 @@ final class Core
         return $this->minimumPhpVersion;
     }
 
-    /**
-     * @throws \Botble\Base\Exceptions\LicenseInvalidException
-     * @throws \Botble\Base\Exceptions\LicenseIsAlreadyActivatedException
-     */
-    public function activateLicense(string $license, string $client): bool
-    {
-        LicenseActivating::dispatch($license, $client);
+    // public function activateLicense(string $license, string $client): bool
+    // {
+    //     LicenseActivating::dispatch($license, $client);
 
-        $response = $this->createRequest('/api/activate_license', [
-            'product_id' => $this->productId,
-            'license_code' => $license,
-            'client_name' => $client,
-            'verify_type' => $this->productSource,
-        ]);
+    //     $response = $this->createRequest('/api/activate_license', [
+    //         'product_id' => $this->productId,
+    //         'license_code' => $license,
+    //         'client_name' => $client,
+    //         'verify_type' => $this->productSource,
+    //     ]);
 
-        if ($response->failed()) {
-            throw new LicenseInvalidException('Could not activate your license. Please try again later.');
-        }
+    //     if ($response->failed()) {
+    //         throw new LicenseInvalidException('Could not activate your license. Please try again later.');
+    //     }
 
-        $data = $response->json();
+    //     $data = $response->json();
 
-        if (! Arr::get($data, 'status')) {
-            $this->files->delete($this->licenseFilePath);
+    //     if (! Arr::get($data, 'status')) {
+    //         $this->files->delete($this->licenseFilePath);
 
-            $message = Arr::get($data, 'message');
+    //         $message = Arr::get($data, 'message');
 
-            if (Arr::get($data, 'status_code') === 'ACTIVATED_MAXIMUM_ALLOWED_PRODUCT_INSTANCES') {
-                throw new LicenseIsAlreadyActivatedException($message);
-            }
+    //         if (Arr::get($data, 'status_code') === 'ACTIVATED_MAXIMUM_ALLOWED_PRODUCT_INSTANCES') {
+    //             throw new LicenseIsAlreadyActivatedException($message);
+    //         }
 
-            LicenseInvalid::dispatch($license, $client);
+    //         LicenseInvalid::dispatch($license, $client);
 
-            throw new LicenseInvalidException($message);
-        }
+    //         throw new LicenseInvalidException($message);
+    //     }
 
-        $this->files->put($this->licenseFilePath, Arr::get($data, 'lic_response'), true);
+    //     $this->files->put($this->licenseFilePath, Arr::get($data, 'lic_response'), true);
 
-        $this->session->forget("license:{$this->cacheLicenseKeyName}:last_checked_date");
+    //     $this->session->forget("license:{$this->cacheLicenseKeyName}:last_checked_date");
 
-        LicenseActivated::dispatch($license, $client);
+    //     LicenseActivated::dispatch($license, $client);
 
-        return true;
-    }
+    //     return true;
+    // }
 
-    public function verifyLicense(bool $timeBasedCheck = false): bool
-    {
-        LicenseVerifying::dispatch();
+    // public function verifyLicense(bool $timeBasedCheck = false): bool
+    // {
+    //     LicenseVerifying::dispatch();
 
-        if (! $this->files->exists($this->licenseFilePath)) {
-            return false;
-        }
+    //     if (! $this->files->exists($this->licenseFilePath)) {
+    //         return false;
+    //     }
 
-        $verified = true;
+    //     $verified = true;
 
-        if ($timeBasedCheck) {
-            $dateFormat = 'd-m-Y';
-            $cachesKey = "license:{$this->cacheLicenseKeyName}:last_checked_date";
-            $lastCheckedDate = Carbon::createFromFormat(
-                $dateFormat,
-                $this->session->get($cachesKey, '01-01-1970')
-            )->endOfDay();
-            $now = Carbon::now()->addDays($this->verificationPeriod);
+    //     if ($timeBasedCheck) {
+    //         $dateFormat = 'd-m-Y';
+    //         $cachesKey = "license:{$this->cacheLicenseKeyName}:last_checked_date";
+    //         $lastCheckedDate = Carbon::createFromFormat(
+    //             $dateFormat,
+    //             $this->session->get($cachesKey, '01-01-1970')
+    //         )->endOfDay();
+    //         $now = Carbon::now()->addDays($this->verificationPeriod);
 
-            if ($now->greaterThan($lastCheckedDate) && $verified = $this->verifyLicenseDirectly()) {
-                $this->session->put($cachesKey, $now->format($dateFormat));
-            }
+    //         if ($now->greaterThan($lastCheckedDate) && $verified = $this->verifyLicenseDirectly()) {
+    //             $this->session->put($cachesKey, $now->format($dateFormat));
+    //         }
 
-            return $verified;
-        }
+    //         return $verified;
+    //     }
 
-        return $this->verifyLicenseDirectly();
-    }
+    //     return $this->verifyLicenseDirectly();
+    // }
 
-    public function revokeLicense(string $license, string $client): bool
-    {
-        $this->session->forget("license:{$this->cacheLicenseKeyName}:last_checked_date");
+    // public function revokeLicense(string $license, string $client): bool
+    // {
+    //     $this->session->forget("license:{$this->cacheLicenseKeyName}:last_checked_date");
 
-        LicenseRevoking::dispatch($license, $client);
+    //     LicenseRevoking::dispatch($license, $client);
 
-        $data = [
-            'product_id' => $this->productId,
-            'license_code' => $license,
-            'client_name' => $client,
-        ];
+    //     $data = [
+    //         'product_id' => $this->productId,
+    //         'license_code' => $license,
+    //         'client_name' => $client,
+    //     ];
 
-        return tap(
-            $this->createDeactivateRequest($data),
-            fn () => LicenseRevoked::dispatch($license, $client)
-        );
-    }
+    //     return tap(
+    //         $this->createDeactivateRequest($data),
+    //         fn () => LicenseRevoked::dispatch($license, $client)
+    //     );
+    // }
 
-    public function deactivateLicense(): bool
-    {
-        $this->session->forget("license:{$this->cacheLicenseKeyName}:last_checked_date");
+    // public function deactivateLicense(): bool
+    // {
+    //     $this->session->forget("license:{$this->cacheLicenseKeyName}:last_checked_date");
 
-        LicenseDeactivating::dispatch();
+    //     LicenseDeactivating::dispatch();
 
-        if (! $this->files->exists($this->licenseFilePath)) {
-            return false;
-        }
+    //     if (! $this->files->exists($this->licenseFilePath)) {
+    //         return false;
+    //     }
 
-        $data = [
-            'product_id' => $this->productId,
-            'license_file' => $this->getLicenseFile(),
-        ];
+    //     $data = [
+    //         'product_id' => $this->productId,
+    //         'license_file' => $this->getLicenseFile(),
+    //     ];
 
-        return tap(
-            $this->createDeactivateRequest($data),
-            fn () => LicenseDeactivated::dispatch()
-        );
-    }
+    //     return tap(
+    //         $this->createDeactivateRequest($data),
+    //         fn () => LicenseDeactivated::dispatch()
+    //     );
+    // }
 
     public function checkUpdate(): CoreProduct|false
     {
@@ -268,37 +264,37 @@ final class Core
         return (float) $sizeUpdateResponse->header('Content-Length') ?: 1;
     }
 
-    public function downloadUpdate(string $updateId, string $version): bool
-    {
-        SystemUpdateDownloading::dispatch();
+    // public function downloadUpdate(string $updateId, string $version): bool
+    // {
+    //     SystemUpdateDownloading::dispatch();
 
-        if (! $this->files->exists($this->licenseFilePath)) {
-            return false;
-        }
+    //     if (! $this->files->exists($this->licenseFilePath)) {
+    //         return false;
+    //     }
 
-        $data = [
-            'product_id' => $this->productId,
-            'license_file' => $this->getLicenseFile(),
-        ];
+    //     $data = [
+    //         'product_id' => $this->productId,
+    //         'license_file' => $this->getLicenseFile(),
+    //     ];
 
-        $filePath = $this->getUpdatedFilePath($version);
+    //     $filePath = $this->getUpdatedFilePath($version);
 
-        if (! $this->files->exists($filePath)) {
-            $response = $this->createRequest('/api/download_update/main/' . $updateId, $data);
+    //     if (! $this->files->exists($filePath)) {
+    //         $response = $this->createRequest('/api/download_update/main/' . $updateId, $data);
 
-            $this->files->put($filePath, $response->body());
-        }
+    //         $this->files->put($filePath, $response->body());
+    //     }
 
-        if ($this->validateUpdateFile($filePath)) {
-            SystemUpdateDownloaded::dispatch($filePath);
+    //     if ($this->validateUpdateFile($filePath)) {
+    //         SystemUpdateDownloaded::dispatch($filePath);
 
-            return true;
-        }
+    //         return true;
+    //     }
 
-        $this->files->delete($filePath);
+    //     $this->files->delete($filePath);
 
-        return false;
-    }
+    //     return false;
+    // }
 
     public function updateFilesAndDatabase(string $version): bool
     {
@@ -504,37 +500,37 @@ final class Core
         return true;
     }
 
-    public function getLicenseFile(): string|null
-    {
-        if (! $this->files->exists($this->licenseFilePath)) {
-            return null;
-        }
+    // public function getLicenseFile(): string|null
+    // {
+    //     if (! $this->files->exists($this->licenseFilePath)) {
+    //         return null;
+    //     }
 
-        return $this->files->get($this->licenseFilePath);
-    }
+    //     return $this->files->get($this->licenseFilePath);
+    // }
 
-    private function forgotLicensedInformation(): void
-    {
-        Setting::delete([
-            'licensed_to',
-        ]);
-    }
+    // private function forgotLicensedInformation(): void
+    // {
+    //     Setting::delete([
+    //         'licensed_to',
+    //     ]);
+    // }
 
-    private function parseDataFromCoreDataFile(): void
-    {
-        if (! $this->files->exists($this->coreDataFilePath)) {
-            return;
-        }
+    // private function parseDataFromCoreDataFile(): void
+    // {
+    //     if (! $this->files->exists($this->coreDataFilePath)) {
+    //         return;
+    //     }
 
-        $data = $this->getCoreFileData();
+    //     $data = $this->getCoreFileData();
 
-        $this->productId = Arr::get($data, 'productId', '');
-        $this->productSource = Arr::get($data, 'source', 'envato');
-        $this->licenseUrl = rtrim(Arr::get($data, 'apiUrl', $this->licenseUrl), '/');
-        $this->licenseKey = Arr::get($data, 'apiKey', $this->licenseKey);
-        $this->version = Arr::get($data, 'version', $this->version);
-        $this->minimumPhpVersion = Arr::get($data, 'minimumPhpVersion', $this->minimumPhpVersion);
-    }
+    //     $this->productId = Arr::get($data, 'productId', '');
+    //     $this->productSource = Arr::get($data, 'source', 'envato');
+    //     $this->licenseUrl = rtrim(Arr::get($data, 'apiUrl', $this->licenseUrl), '/');
+    //     $this->licenseKey = Arr::get($data, 'apiKey', $this->licenseKey);
+    //     $this->version = Arr::get($data, 'version', $this->version);
+    //     $this->minimumPhpVersion = Arr::get($data, 'minimumPhpVersion', $this->minimumPhpVersion);
+    // }
 
     public function getCoreFileData(): array
     {
@@ -545,80 +541,80 @@ final class Core
         }
     }
 
-    private function createRequest(string $path, array $data = [], string $method = 'POST'): Response
-    {
-        if (! extension_loaded('curl')) {
-            throw new MissingCURLExtensionException();
-        }
+    // private function createRequest(string $path, array $data = [], string $method = 'POST'): Response
+    // {
+    //     if (! extension_loaded('curl')) {
+    //         throw new MissingCURLExtensionException();
+    //     }
 
-        $request = Http::baseUrl($this->licenseUrl)
-            ->withHeaders([
-                'LB-API-KEY' => $this->licenseKey,
-                'LB-URL' => rtrim(url('/'), '/'),
-                'LB-IP' => $this->getClientIpAddress(),
-                'LB-LANG' => 'english',
-            ])
-            ->asJson()
-            ->acceptJson()
-            ->withoutVerifying()
-            ->connectTimeout(100)
-            ->timeout(300);
+    //     $request = Http::baseUrl($this->licenseUrl)
+    //         ->withHeaders([
+    //             'LB-API-KEY' => $this->licenseKey,
+    //             'LB-URL' => rtrim(url('/'), '/'),
+    //             'LB-IP' => $this->getClientIpAddress(),
+    //             'LB-LANG' => 'english',
+    //         ])
+    //         ->asJson()
+    //         ->acceptJson()
+    //         ->withoutVerifying()
+    //         ->connectTimeout(100)
+    //         ->timeout(300);
 
-        return match (Str::upper($method)) {
-            'GET' => $request->get($path, $data),
-            'HEAD' => $request->head($path),
-            default => $request->post($path, $data)
-        };
-    }
+    //     return match (Str::upper($method)) {
+    //         'GET' => $request->get($path, $data),
+    //         'HEAD' => $request->head($path),
+    //         default => $request->post($path, $data)
+    //     };
+    // }
 
-    private function createDeactivateRequest(array $data): bool
-    {
-        $response = $this->createRequest('/api/deactivate_license', $data);
+    // private function createDeactivateRequest(array $data): bool
+    // {
+    //     $response = $this->createRequest('/api/deactivate_license', $data);
 
-        $data = $response->json();
+    //     $data = $response->json();
 
-        if ($response->ok() && Arr::get($data, 'status')) {
-            $this->files->delete($this->licenseFilePath);
+    //     if ($response->ok() && Arr::get($data, 'status')) {
+    //         $this->files->delete($this->licenseFilePath);
 
-            $this->forgotLicensedInformation();
+    //         $this->forgotLicensedInformation();
 
-            return true;
-        }
+    //         return true;
+    //     }
 
-        return false;
-    }
+    //     return false;
+    // }
 
     private function getClientIpAddress(): string
     {
         return Helper::getIpFromThirdParty();
     }
 
-    private function verifyLicenseDirectly(): bool
-    {
-        if (! $this->files->exists($this->licenseFilePath)) {
-            LicenseUnverified::dispatch();
+    // private function verifyLicenseDirectly(): bool
+    // {
+    //     if (! $this->files->exists($this->licenseFilePath)) {
+    //         LicenseUnverified::dispatch();
 
-            return false;
-        }
+    //         return false;
+    //     }
 
-        $data = [
-            'product_id' => $this->productId,
-            'license_file' => $this->getLicenseFile(),
-        ];
+    //     $data = [
+    //         'product_id' => $this->productId,
+    //         'license_file' => $this->getLicenseFile(),
+    //     ];
 
-        $response = $this->createRequest('/api/verify_license', $data);
-        $data = $response->json();
+    //     $response = $this->createRequest('/api/verify_license', $data);
+    //     $data = $response->json();
 
-        if ($verified = $response->ok() && Arr::get($data, 'status')) {
-            LicenseVerified::dispatch();
-        } else {
-            $this->files->delete($this->licenseFilePath);
+    //     if ($verified = $response->ok() && Arr::get($data, 'status')) {
+    //         LicenseVerified::dispatch();
+    //     } else {
+    //         $this->files->delete($this->licenseFilePath);
 
-            LicenseUnverified::dispatch();
-        }
+    //         LicenseUnverified::dispatch();
+    //     }
 
-        return $verified;
-    }
+    //     return $verified;
+    // }
 
     private function parseProductUpdateResponse(Response $response): CoreProduct|false
     {
@@ -645,8 +641,8 @@ final class Core
         return base_path('update_main_' . $version . '.zip');
     }
 
-    public function getLicenseFilePath(): string
-    {
-        return $this->licenseFilePath;
-    }
+    // public function getLicenseFilePath(): string
+    // {
+    //     return $this->licenseFilePath;
+    // }
 }

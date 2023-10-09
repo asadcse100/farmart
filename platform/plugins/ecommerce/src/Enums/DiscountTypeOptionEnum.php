@@ -6,12 +6,6 @@ use Botble\Base\Facades\Html;
 use Botble\Base\Supports\Enum;
 use Illuminate\Support\HtmlString;
 
-/**
- * @method static DiscountTypeOptionEnum AMOUNT()
- * @method static DiscountTypeOptionEnum PERCENTAGE()
- * @method static DiscountTypeOptionEnum SHIPPING()
- * @method static DiscountTypeOptionEnum SAME_PRICE()
- */
 class DiscountTypeOptionEnum extends Enum
 {
     public const AMOUNT = 'amount';

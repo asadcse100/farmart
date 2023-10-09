@@ -6,13 +6,6 @@ use Botble\Base\Facades\Html;
 use Botble\Base\Supports\Enum;
 use Illuminate\Support\HtmlString;
 
-/**
- * @method static InvoiceStatusEnum PENDING()
- * @method static InvoiceStatusEnum PROCESSING()
- * @method static InvoiceStatusEnum COMPLETED()
- * @method static InvoiceStatusEnum CANCELED()
- * @method static InvoiceStatusEnum RETURNED()
- */
 class InvoiceStatusEnum extends Enum
 {
     public const PENDING = 'pending';

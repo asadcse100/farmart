@@ -2,7 +2,7 @@
 
 namespace Botble\PluginManagement\Services;
 
-use Botble\Base\Exceptions\RequiresLicenseActivatedException;
+// use Botble\Base\Exceptions\RequiresLicenseActivatedException;
 use Botble\Base\Supports\Core;
 use Botble\Base\Supports\Zipper;
 use Illuminate\Http\Client\PendingRequest;
@@ -23,26 +23,26 @@ class MarketplaceService
 
     protected string $productId;
 
-    protected string $licenseUrl;
+    // protected string $licenseUrl;
 
-    protected string $licenseApiKey;
+    // protected string $licenseApiKey;
 
-    public function __construct(string $url = null, string $token = null)
-    {
-        $core = Core::make()->getCoreFileData();
+    // public function __construct(string $url = null, string $token = null)
+    // {
+    //     $core = Core::make()->getCoreFileData();
 
-        $this->url = $url ?? $core['marketplaceUrl'];
+    //     $this->url = $url ?? $core['marketplaceUrl'];
 
-        $this->token = $token ?? $core['marketplaceToken'];
+    //     $this->token = $token ?? $core['marketplaceToken'];
 
-        $this->publishedPath = storage_path('app/marketplace/');
+    //     $this->publishedPath = storage_path('app/marketplace/');
 
-        $this->productId = $core['productId'];
+    //     $this->productId = $core['productId'];
 
-        $this->licenseUrl = $core['apiUrl'];
+    //     $this->licenseUrl = $core['apiUrl'];
 
-        $this->licenseApiKey = $core['apiKey'];
-    }
+    //     $this->licenseApiKey = $core['apiKey'];
+    // }
 
     public function callApi(string $method, string $path, array $request = []): JsonResponse|Response
     {
@@ -90,44 +90,44 @@ class MarketplaceService
             ->timeout(300);
     }
 
-    public function beginInstall(string $id, string $type, string $name): bool|JsonResponse
-    {
-        $core = Core::make();
-        $licenseFilePath = $core->getLicenseFilePath();
+    // public function beginInstall(string $id, string $type, string $name): bool|JsonResponse
+    // {
+    //     $core = Core::make();
+    //     $licenseFilePath = $core->getLicenseFilePath();
 
-        if (! File::exists($licenseFilePath)) {
-            throw new RequiresLicenseActivatedException();
-        }
+    //     if (! File::exists($licenseFilePath)) {
+    //         throw new RequiresLicenseActivatedException();
+    //     }
 
-        $data = $this->callApi(
-            'post',
-            '/products/' . $id . '/download',
-            [
-                'license_url' => $this->licenseUrl,
-                'license_api_key' => $this->licenseApiKey,
-                'license_file' => $core->getLicenseFile(),
-            ]
-        );
+    //     $data = $this->callApi(
+    //         'post',
+    //         '/products/' . $id . '/download',
+    //         [
+    //             'license_url' => $this->licenseUrl,
+    //             'license_api_key' => $this->licenseApiKey,
+    //             'license_file' => $core->getLicenseFile(),
+    //         ]
+    //     );
 
-        if ($data->getStatusCode() != 200) {
-            $content = json_decode($data->getContent(), true);
+    //     if ($data->getStatusCode() != 200) {
+    //         $content = json_decode($data->getContent(), true);
 
-            return $this->responseReturn(Arr::get($content, 'message') ?: $data, true);
-        }
+    //         return $this->responseReturn(Arr::get($content, 'message') ?: $data, true);
+    //     }
 
-        File::ensureDirectoryExists($this->publishedPath . $id);
+    //     File::ensureDirectoryExists($this->publishedPath . $id);
 
-        $destination = $this->publishedPath . $id . '/' . $name . '.zip';
+    //     $destination = $this->publishedPath . $id . '/' . $name . '.zip';
 
-        File::cleanDirectory($this->publishedPath . $id);
+    //     File::cleanDirectory($this->publishedPath . $id);
 
-        File::put($destination, $data);
+    //     File::put($destination, $data);
 
-        $this->extractFile($id, $name);
-        $this->copyToPath($id, $type, $name);
+    //     $this->extractFile($id, $name);
+    //     $this->copyToPath($id, $type, $name);
 
-        return true;
-    }
+    //     return true;
+    // }
 
     protected function extractFile(string $id, string $name): string
     {

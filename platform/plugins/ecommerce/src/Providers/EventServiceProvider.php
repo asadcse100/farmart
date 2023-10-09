@@ -18,7 +18,7 @@ use Botble\Ecommerce\Events\ShippingStatusChanged;
 use Botble\Ecommerce\Listeners\AddLanguageForVariantsListener;
 use Botble\Ecommerce\Listeners\ClearShippingRuleCache;
 use Botble\Ecommerce\Listeners\GenerateInvoiceListener;
-use Botble\Ecommerce\Listeners\GenerateLicenseCodeAfterOrderCompleted;
+// use Botble\Ecommerce\Listeners\GenerateLicenseCodeAfterOrderCompleted;
 use Botble\Ecommerce\Listeners\OrderCancelledNotification;
 use Botble\Ecommerce\Listeners\OrderCreatedNotification;
 use Botble\Ecommerce\Listeners\OrderPaymentConfirmedNotification;
@@ -71,7 +71,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         OrderCompletedEvent::class => [
             SendProductReviewsMailAfterOrderCompleted::class,
-            GenerateLicenseCodeAfterOrderCompleted::class,
+            // GenerateLicenseCodeAfterOrderCompleted::class,
         ],
         ProductViewed::class => [
             UpdateProductView::class,

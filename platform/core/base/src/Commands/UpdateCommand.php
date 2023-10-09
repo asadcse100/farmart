@@ -38,11 +38,11 @@ class UpdateCommand extends Command
 
         $latestUpdate = $this->core->getLatestVersion();
 
-        if (! $latestUpdate) {
-            $this->components->error('Your license is invalid. Please activate your license first.');
+        // if (! $latestUpdate) {
+        //     $this->components->error('Your license is invalid. Please activate your license first.');
 
-            return self::FAILURE;
-        }
+        //     return self::FAILURE;
+        // }
 
         if (version_compare($latestUpdate->version, $this->core->version(), '<=')) {
             if ($this->components->confirm(
@@ -64,7 +64,6 @@ class UpdateCommand extends Command
 
         array_map(fn ($line) => $this->line($line), [
             'Please backup your database and script files before upgrading',
-            'You need to activate your license before doing upgrade.',
             'If you don\'t need this 1-click update, you can disable it in <fg=yellow>.env</>? by adding <fg=yellow>CMS_ENABLE_SYSTEM_UPDATER=false</>',
             'It will override all files in <fg=yellow>./platform/core</>, <fg=yellow>./platform/packages</>, all plugins developed by us in <fg=yellow>./platform/plugins</> and theme developed by us in <fg=yellow>./platform/themes</>.',
         ]);
@@ -90,11 +89,11 @@ class UpdateCommand extends Command
         $progressBar->start();
 
         try {
-            if (! $this->core->verifyLicense(true)) {
-                $this->errorWithNewLines('Your license is invalid. Please activate your license first.');
+            // if (! $this->core->verifyLicense(true)) {
+            //     $this->errorWithNewLines('Your license is invalid. Please activate your license first.');
 
-                return self::FAILURE;
-            }
+            //     return self::FAILURE;
+            // }
 
             $progressBar->setMessage('Downloading the latest update...');
             $progressBar->advance();

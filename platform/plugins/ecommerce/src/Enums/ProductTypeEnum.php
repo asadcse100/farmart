@@ -7,10 +7,6 @@ use Botble\Base\Supports\Enum;
 use Botble\Ecommerce\Facades\EcommerceHelper;
 use Illuminate\Support\HtmlString;
 
-/**
- * @method static ProductTypeEnum PHYSICAL()
- * @method static ProductTypeEnum DIGITAL()
- */
 class ProductTypeEnum extends Enum
 {
     public const PHYSICAL = 'physical';
