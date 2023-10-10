@@ -6,11 +6,6 @@
 {
     var hasTouch = 'ontouchstart' in window;
 
-    /**
-     * Detect CSS pointer-events property
-     * events are normally disabled on the dragging element to avoid conflicts
-     * https://github.com/ausi/Feature-detection-technique-for-pointer-events/blob/master/modernizr-pointerevents.js
-     */
     var hasPointerEvents = (function()
     {
         var el    = document.createElement('div'),

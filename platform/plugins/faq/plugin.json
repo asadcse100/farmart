@@ -3,8 +3,7 @@
     "name": "FAQ",
     "namespace": "Botble\\Faq\\",
     "provider": "Botble\\Faq\\Providers\\FaqServiceProvider",
-    "author": "Botble Technologies",
-    "url": "https://botble.com",
+    "author": "Misoftit Technologies",
     "version": "2.0.0",
     "description": "Frequently Asked Question(s) FAQ"
 }

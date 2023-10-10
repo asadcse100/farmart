@@ -3,8 +3,7 @@
     "name": "Language Advanced",
     "namespace": "Botble\\LanguageAdvanced\\",
     "provider": "Botble\\LanguageAdvanced\\Providers\\LanguageAdvancedServiceProvider",
-    "author": "Botble Technologies",
-    "url": "https://botble.com",
+    "author": "Misoftit Technologies",
     "version": "1.2.0",
     "description": "Advanced Multi-language",
     "require": ["botble/language"]

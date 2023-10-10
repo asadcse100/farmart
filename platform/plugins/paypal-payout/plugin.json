@@ -3,7 +3,7 @@
     "name": "PayPal Payout",
     "namespace": "Botble\\PayPalPayout\\",
     "provider": "Botble\\PayPalPayout\\Providers\\PayPalPayoutServiceProvider",
-    "author": "Botble Technologies",
+    "author": "Misoftit Technologies",
     "version": "1.0.0",
     "description": "PayPal Payout payment gateway integration",
     "require": [

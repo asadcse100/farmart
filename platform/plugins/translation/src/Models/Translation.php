@@ -6,11 +6,6 @@ use Botble\Base\Models\BaseModel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\DB;
 
-/**
- * @method ofTranslatedGroup(string|null $group)
- * @method orderByGroupKeys(bool $ordered)
- * @method selectDistinctGroup()
- */
 class Translation extends BaseModel
 {
     public const STATUS_SAVED = 0;

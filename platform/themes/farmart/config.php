@@ -10,31 +10,7 @@ use Illuminate\View\View as IlluminateView;
 
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Inherit from another theme
-    |--------------------------------------------------------------------------
-    |
-    | Set up inherit from another if the file is not exists,
-    | this is work with "layouts", "partials" and "views"
-    |
-    | [Notice] assets cannot inherit.
-    |
-    */
-
     'inherit' => null, //default
-
-    /*
-    |--------------------------------------------------------------------------
-    | Listener from events
-    |--------------------------------------------------------------------------
-    |
-    | You can hook a theme when event fired on activities
-    | this is cool feature to set up a title, meta, default styles and scripts.
-    |
-    | [Notice] these events can be overridden by package config.
-    |
-    */
 
     'events' => [
 
